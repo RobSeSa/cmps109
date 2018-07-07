@@ -116,12 +116,22 @@ bigint bigint::operator* (const bigint& that) const {
 }
 
 bigint bigint::operator/ (const bigint& that) const {
-   bigint result = uvalue / that.uvalue;
+   bigint result;
+   result.is_negative = false;
+   result.uvalue = uvalue / that.uvalue;
+   if(is_negative != that.is_negative){
+      result.is_negative = true;
+   }
    return result;
 }
 
 bigint bigint::operator% (const bigint& that) const {
-   bigint result = uvalue % that.uvalue;
+   bigint result;
+   result.uvalue = uvalue % that.uvalue;
+   result.is_negative = false;
+   if(is_negative == true){ 
+      result.is_negative = true;
+   }
    return result;
 }
 
