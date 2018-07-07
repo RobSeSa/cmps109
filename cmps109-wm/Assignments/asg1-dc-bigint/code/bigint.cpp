@@ -40,35 +40,78 @@ bigint bigint::operator+ (const bigint& that) const {
    result.is_negative = false;
    //when both positive
    if (is_negative == false && that.is_negative == false){
-      cout << " hi we are both positive!!" << endl;
-      result = uvalue + that.uvalue;
+      result.uvalue = uvalue + that.uvalue;
    }
    //when this = positive and that = negative
    else if (is_negative == false && that.is_negative == true){
-      cout << " this = pos, that = neg" << endl;
-      result = uvalue - that.uvalue;
+      if ( uvalue < that.uvalue ){
+         result.uvalue = that.uvalue - uvalue;
+         result.is_negative = true;
+      }
+      else{
+         result.uvalue = uvalue - that.uvalue;
+      }
    }
    //when this = negative and that = positive
    else if (is_negative == true  && that.is_negative == false){
-      cout << " this = neg, that = pos" << endl;
-      result = that.uvalue - uvalue;
+      if ( that.uvalue < uvalue ){
+         result.uvalue = uvalue - that.uvalue;;
+         result.is_negative = true;
+      }
+      else{
+         result.uvalue = that.uvalue - uvalue;
+      }
    }
    //when both negative
    else{
-      cout << " this = neg, that = neg" << endl;
-      result = uvalue + that.uvalue;
+      result.uvalue = uvalue + that.uvalue;
       result.is_negative = true;
    }
    return result;
 }
 
 bigint bigint::operator- (const bigint& that) const {
-   ubigint result = uvalue - that.uvalue;
+   bigint result;
+   result.is_negative = false;
+   //when both positive
+   if (is_negative == false && that.is_negative == false){
+      if ( uvalue < that.uvalue ){
+         result.uvalue = that.uvalue - uvalue;
+         result.is_negative = true;
+      }
+      else{
+         result.uvalue = uvalue - that.uvalue;
+      }
+   }
+   //when this = positive and that = negative
+   else if (is_negative == false && that.is_negative == true){
+      result.uvalue = uvalue + that.uvalue;
+   }
+   //when this = negative and that = positive
+   else if (is_negative == true  && that.is_negative == false){
+      result.uvalue = that.uvalue + uvalue;
+      result.is_negative = true;
+   }
+   //when both negative
+   else{
+      if ( uvalue < that.uvalue || uvalue == that.uvalue ){
+         result.uvalue = that.uvalue - uvalue;
+      }
+      else{
+         result.uvalue = uvalue - that.uvalue;
+         result.is_negative = true;
+      }
+   }
    return result;
 }
 
 bigint bigint::operator* (const bigint& that) const {
-   bigint result = uvalue * that.uvalue;
+   bigint result;
+   result.is_negative = false;
+   result.uvalue = uvalue * that.uvalue;
+   if(is_negative != that.is_negative){
+      result.is_negative = true;
+   }
    return result;
 }
 
